@@ -12,7 +12,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Dock'),
+          title: const Text(
+            'Dock',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+          elevation: 4,
           centerTitle: true,
         ),
         body: Center(
