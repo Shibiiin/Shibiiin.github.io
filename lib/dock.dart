@@ -27,7 +27,7 @@ class _DockState<T extends Object> extends State<Dock<T>> {
     final w = MediaQuery.sizeOf(context).width;
     return SingleChildScrollView(
       child: Container(
-        width: w * 0.6,
+        // width: w * 0.6,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.red.withOpacity(0.4),
@@ -85,7 +85,7 @@ class _DockState<T extends Object> extends State<Dock<T>> {
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 padding: isHovered
-                    ? EdgeInsets.only(left: w * 0.08, right: w * 0.05)
+                    ? EdgeInsets.only(left: w * 0.06, right: w * 0.06)
                     : const EdgeInsets.symmetric(horizontal: 4),
                 child: LongPressDraggable<T>(
                   data: item,
@@ -104,7 +104,7 @@ class _DockState<T extends Object> extends State<Dock<T>> {
                   onDragEnd: (details) {
                     if (details.wasAccepted == false) {
                       setState(() {
-                        _items.remove(item);
+                        // _items.remove(item);
                         _draggingItem = null;
                       });
                       print("Removed $item");
