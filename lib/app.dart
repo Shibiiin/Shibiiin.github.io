@@ -11,6 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Dock'),
+          centerTitle: true,
+        ),
         body: Center(
           child: Dock(
             items: const [
