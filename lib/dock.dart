@@ -15,29 +15,25 @@ class Dock<T extends Object> extends StatefulWidget {
   State<Dock<T>> createState() => _DockState<T>();
 }
 
-/// State of the [Dock] used to manipulate the [_items].
 class _DockState<T extends Object> extends State<Dock<T>> {
   late List<T> _items = widget.items.toList();
   T? _draggingItem; // Currently dragging item
   T? _hoveredItem; // Item being hovered
-  bool _isDraggingOut = false;
+  bool _isDraggingOut = false; // If the item is being dragged out
 
   @override
   Widget build(BuildContext context) {
-    final w = MediaQuery.sizeOf(context).width;
-    return SingleChildScrollView(
-      child: Container(
-        // width: w * 0.6,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.red.withOpacity(0.4),
-        ),
-        padding: const EdgeInsets.all(4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.min,
-          children: _buildDraggableItems(w),
-        ),
+    final containerWidth = MediaQuery.sizeOf(context).width;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.black12,
+      ),
+      padding: const EdgeInsets.all(4),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: _buildDraggableItems(containerWidth),
       ),
     );
   }
@@ -50,31 +46,38 @@ class _DockState<T extends Object> extends State<Dock<T>> {
       return DragTarget<T>(
         onWillAccept: (data) {
           setState(() {
-            _hoveredItem = item;
+            _hoveredItem = item; // Set hovered item
             _isDraggingOut = false;
           });
           return true;
         },
         onLeave: (data) {
           setState(() {
-            _hoveredItem = null;
+            _hoveredItem = null; // Reset hovered item
           });
         },
         onAccept: (data) {
           setState(() {
-            _items.remove(data);
-            _items.insert(index, data);
+            _items.remove(data); // Remove from old position
+            _items.insert(index, data); // Insert into new position
             _hoveredItem = null;
             _draggingItem = null;
           });
         },
         builder: (context, candidateData, rejectedData) {
           return AnimatedContainer(
+            height: isHovered ? 80 : 70,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             padding: isHovered
                 ? EdgeInsets.only(
-                    left: containerWidth * 0.04, right: containerWidth * 0.04)
+                    left: isHovered
+                        ? containerWidth * 0.02
+                        : containerWidth * 0.05,
+                    right: isHovered
+                        ? containerWidth * 0.02
+                        : containerWidth * 0.05,
+                  )
                 : const EdgeInsets.symmetric(horizontal: 4),
             child: LongPressDraggable<T>(
               data: item,
@@ -106,10 +109,13 @@ class _DockState<T extends Object> extends State<Dock<T>> {
                   child: widget.builder(item),
                 ),
               ),
-              childWhenDragging: const SizedBox(
-                width: 10,
-                height: 10,
-              ),
+              childWhenDragging: _isDraggingOut
+                  ? const SizedBox.shrink()
+                  : Container(
+                      width: 0,
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
               child: MouseRegion(
                 onHover: (_) {
                   setState(() {
