@@ -17,9 +17,9 @@ class Dock<T extends Object> extends StatefulWidget {
 
 class _DockState<T extends Object> extends State<Dock<T>> {
   late List<T> _items = widget.items.toList();
-  T? _draggingItem; // Currently dragging item
-  T? _hoveredItem; // Item being hovered
-  bool _isDraggingOut = false; // If the item is being dragged out
+  T? _draggingItem;
+  T? _hoveredItem;
+  bool _isDraggingOut = false;
 
   @override
   Widget build(BuildContext context) {
