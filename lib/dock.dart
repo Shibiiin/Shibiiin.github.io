@@ -72,10 +72,10 @@ class _DockState<T extends Object> extends State<Dock<T>> {
             padding: isHovered
                 ? EdgeInsets.only(
                     left: isHovered
-                        ? containerWidth * 0.02
+                        ? containerWidth * 0.025
                         : containerWidth * 0.05,
                     right: isHovered
-                        ? containerWidth * 0.02
+                        ? containerWidth * 0.025
                         : containerWidth * 0.05,
                   )
                 : const EdgeInsets.symmetric(horizontal: 4),
