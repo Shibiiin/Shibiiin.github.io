@@ -33187,7 +33187,7 @@ s.f=null},
 $S:0}
 A.Yo.prototype={
 $3(a,b,c){var s,r,q,p,o,n=this,m=null,l=n.b,k=l?80:70
-if(l){l=n.c*0.02
+if(l){l=n.c*0.025
 l=new A.b5(l,0,l,0)}else l=B.AV
 s=n.d
 r=n.a
